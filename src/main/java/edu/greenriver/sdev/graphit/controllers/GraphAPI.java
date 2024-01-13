@@ -2,8 +2,7 @@ package edu.greenriver.sdev.graphit.controllers;
 
 import edu.greenriver.sdev.graphit.models.Course;
 import edu.greenriver.sdev.graphit.models.CourseGraph;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -31,9 +30,7 @@ public class GraphAPI {
 
     CourseGraph courseGraph = new CourseGraph();
 
-    @GetMapping("courses/sorted")
-    public List<Course> getCourses() {
-
+    private void loadCourses() {
         courseGraph.addCourse(math97, new ArrayList<>(List.of(math141, math146, cs108, sdev218)));
         courseGraph.addCourse(eng101, new ArrayList<>(List.of(eng126)));
         courseGraph.addCourse(eng126, new ArrayList<>());
@@ -51,7 +48,18 @@ public class GraphAPI {
         courseGraph.addCourse(sdev219, new ArrayList<>(List.of(sdev220)));
         courseGraph.addCourse(sdev220, new ArrayList<>());
         courseGraph.addCourse(sdev280, new ArrayList<>());
+    }
 
+    // METHOD: addCourse
+    @PostMapping("courses/add/{title}")
+    public void addCourse(@PathVariable String title) {
+        courseGraph.addCourse(new Course(title), new ArrayList<>());
+    }
+
+    // METHOD: getCourses
+    @GetMapping("courses/sorted")
+    public List<Course> getCourses() {
+        loadCourses();
         return courseGraph.sort();
     }
 
