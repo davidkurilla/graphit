@@ -2,10 +2,12 @@ package edu.greenriver.sdev.graphit.services;
 
 import edu.greenriver.sdev.graphit.models.Course;
 import edu.greenriver.sdev.graphit.models.CourseDigraph;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 // CLASS: GraphService
+@Service
 public class GraphService {
 
     // FIELDS
