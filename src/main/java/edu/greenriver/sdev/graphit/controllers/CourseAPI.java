@@ -1,5 +1,6 @@
 package edu.greenriver.sdev.graphit.controllers;
 
+import edu.greenriver.sdev.graphit.services.ScheduleService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ public class CourseAPI {
 
     // FIELDS
     private final GraphService courses = new GraphService();
+    private final ScheduleService scheduleService = new ScheduleService();
 
     // METHOD: createCourse
     @PostMapping("/courses/create/{title}")
@@ -42,6 +44,12 @@ public class CourseAPI {
     public Course readCourseByTitle(@PathVariable String title) {
         // TODO: Write readCourseByTitle
         return null;
+    }
+
+    // METHOD: getSchedule
+    @GetMapping("/schedule/create")
+    public List<List<Course>> getSchedule() {
+        return scheduleService.buildScheduleFromList(courses.sortCourses(), 3);
     }
 
     // METHOD: updateCourse
