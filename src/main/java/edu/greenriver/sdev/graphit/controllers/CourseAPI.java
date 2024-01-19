@@ -1,6 +1,9 @@
 package edu.greenriver.sdev.graphit.controllers;
 
+import edu.greenriver.sdev.graphit.services.CourseService;
 import edu.greenriver.sdev.graphit.services.ScheduleService;
+import org.hibernate.graph.Graph;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,13 +21,22 @@ import java.util.List;
 public class CourseAPI {
 
     // FIELDS
-    private final GraphService courses = new GraphService();
-    private final ScheduleService scheduleService = new ScheduleService();
+    private final GraphService graphService;
+    private final CourseService courseService;
+    private final ScheduleService scheduleService;
+
+    // CONSTRUCTOR
+    @Autowired
+    public CourseAPI(CourseService courseService, GraphService graphService, ScheduleService scheduleService) {
+        this.courseService = courseService;
+        this.graphService = graphService;
+        this.scheduleService = scheduleService;
+    }
 
     // METHOD: createCourse
     @PostMapping("/courses/create/{title}")
     public void addCourse(@PathVariable String title) {
-        courses.addCourse(new Course(title));
+        graphService.addCourse(new Course(title));
     }
 
     // METHOD: deleteCourse
@@ -36,7 +48,7 @@ public class CourseAPI {
     // METHOD: readAllCourses
     @GetMapping("/courses/read/all")
     public List<Course> readAllCourses() {
-        return courses.sortCourses();
+        return courseService.getAll();
     }
 
     // METHOD: readCourseByTitle
@@ -47,9 +59,10 @@ public class CourseAPI {
     }
 
     // METHOD: getSchedule
-    @GetMapping("/schedule/create")
-    public List<List<Course>> getSchedule() {
-        return scheduleService.buildScheduleFromList(courses.sortCourses(), 3);
+    @GetMapping("/schedule/create/{classesPerQuarter}")
+    public List<List<Course>> getSchedule(@PathVariable int classesPerQuarter) {
+        List<Course> courseList = courseService.getAll();
+        return scheduleService.buildScheduleFromList(courseList, classesPerQuarter);
     }
 
     // METHOD: updateCourse

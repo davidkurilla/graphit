@@ -1,12 +1,20 @@
 package edu.greenriver.sdev.graphit.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
+@Entity
 @Data
+@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class Course {
 
     // FIELDS
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @NonNull
     private String title;
 }

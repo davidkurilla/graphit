@@ -21,6 +21,13 @@ public class CourseDigraph {
         adjList = new HashMap<>();
     }
 
+    public CourseDigraph(List<Course> courseList) {
+        adjList = new HashMap<>();
+        for (Course course : courseList) {
+            addVertex(course);
+        }
+    }
+
     // METHOD: addVertex
     public void addVertex(Course vertex) {
         adjList.put(vertex, new LinkedList<>());
