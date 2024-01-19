@@ -2,6 +2,7 @@ package edu.greenriver.sdev.graphit.services;
 
 import edu.greenriver.sdev.graphit.models.Course;
 import edu.greenriver.sdev.graphit.models.CourseDigraph;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +14,15 @@ public class GraphService {
     // FIELDS
     private CourseDigraph graph;
 
-    // CONSTRUCTOR
     public GraphService() {
-        graph = new CourseDigraph();
+        this.graph = new CourseDigraph();
+    }
+
+    // METHOD: addBatchCourses
+    public void addBatchCourses(List<Course> batch) {
+        for (Course course : batch) {
+            graph.addVertex(course);
+        }
     }
 
     // METHOD: addCourse
