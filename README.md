@@ -12,4 +12,4 @@ availability.
 It interacts with AdviseIT to deliver schedules.
 
 ## Technical Details
-GraphIT is built using Java Spring Boot.
+GraphIT is built using Java Spring Boot. It is a RESTful API that can deliver sorted lists of courses.
