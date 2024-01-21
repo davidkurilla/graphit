@@ -36,13 +36,13 @@ public class CourseAPI {
     // METHOD: createCourse
     @PostMapping("/courses/create/{title}")
     public void addCourse(@PathVariable String title) {
-        graphService.addCourse(new Course(title));
+        courseService.add(new Course(title));
     }
 
     // METHOD: deleteCourse
     @DeleteMapping("/courses/delete/{title}")
     public void deleteCourse(@PathVariable String title) {
-        // TODO: Write Delete Courses
+        // TODO: deleteCourse
     }
 
     // METHOD: readAllCourses
